@@ -130,6 +130,6 @@ class CRUDUsers(APIView):
             user = User.objects.get(id=data.get('id'))
             user.deleted_at = timezone.now()
             user.save()
-            return Response({'message': f"user id {data.get('id')} deleted"})
+            return Response({'message': f"User ID {data.get('id')} deleted"})
         except User.DoesNotExist:
             return Response({'error': 'User not found'})
