@@ -27,7 +27,7 @@
 
 ```bass
 git clone https://github.com/vionaaindah/django_rest_framework_crud_api.git
-cd executiveInformation
+cd django_rest_framework_crud_api
 ```
 
 **5. Create an Isolated Python Environment**
