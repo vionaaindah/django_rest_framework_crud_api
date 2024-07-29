@@ -51,7 +51,7 @@ class FetchUsers(APIView):
 class GetUser(APIView):
     def get(self, request, user_id):
         try:
-            user = User.objects.get(id=user_id)
+            user = User.objects.get(id=user_id, deleted_at=None)
             return Response({
                 'id': user.id,
                 'email': user.email,
@@ -65,7 +65,7 @@ class GetUser(APIView):
 class CRUDUsers(APIView):
     # for get all user
     def get(self, request):
-        users = User.objects.all()
+        users = User.objects.filter(deleted_at=None)
         users_list = []
         for user in users:
             users_list.append(
@@ -102,7 +102,7 @@ class CRUDUsers(APIView):
     def put(self, request):
         data = json.loads(request.body)
         try:
-            user = User.objects.get(id=data.get('id'))
+            user = User.objects.get(id=data.get('id'), deleted_at=None)
             user.email = data['email']
             user.first_name = data['first_name']
             user.last_name = data['last_name']
@@ -127,7 +127,7 @@ class CRUDUsers(APIView):
             return Response({'error': 'Unauthorized'})
 
         try:
-            user = User.objects.get(id=data.get('id'))
+            user = User.objects.get(id=data.get('id'), deleted_at=None)
             user.deleted_at = timezone.now()
             user.save()
             return Response({'message': f"User ID {data.get('id')} deleted"})
